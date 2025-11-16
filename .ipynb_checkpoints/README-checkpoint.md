@@ -1,3 +1,0 @@
-This project develops a complete retail demand forecasting pipeline using daily sales data from a French bakery. The goal is to model and predict short-term demand using classical statistical forecasting techniques, enabling improved operational planning, inventory decisions, and resource/staffing allocation.
-
-The notebook explores multiple forecasting strategies, evaluates their performance, and incorporates both exogenous variables and advanced time-series features to enhance model accuracy.
