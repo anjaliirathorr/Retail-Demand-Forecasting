@@ -1,0 +1,209 @@
+Time Series Forecasting Project Report
+Demand Forecasting for French Bakery Sales
+
+Project Overview
+
+This project focuses on building robust time-series forecasting models to predict daily product-level demand for a French bakery. The goal was to support operational decision-making across production planning, inventory management, and resource allocation.
+
+The project applies ARIMA and SARIMA statistical forecasting models, performs rolling cross-validation for reliability, and incorporates exogenous variables such as price and engineered time-based features. It also includes a fully automated forecasting workflow covering preprocessing, model training, model selection, cross-validation, and reporting.
+
+Dataset Description
+
+Source: Daily sales data for multiple bakery products
+
+Key Fields:
+
+unique_id – product name
+
+ds – date
+
+y – daily sales quantity
+
+unit_price – product price
+
+Products with at least 28 days of data were retained for stability.
+
+Exploratory Time-Series Analysis
+
+Trend & Seasonality Insights
+
+Visual inspection revealed weekly seasonality, especially for products like BAGUETTE and CROISSANT.
+
+Sales patterns were inspected using:
+
+Rolling windows
+
+Fourier/time-based features
+
+Seasonal plots
+
+These patterns informed model choices and the use of SARIMA with weekly season length (=7).
+
+Baseline Modeling
+
+To establish benchmark performance, the following simple models were built:
+
+Naive Forecast
+
+Historic Average
+
+Window Average (7-day window)
+
+Seasonal Naive (weekly seasonality)
+
+Evaluation on 7-day holdout:
+
+Model	MAE
+Naive	6.11
+Historic Average	5.23
+Window Average	5.01
+Seasonal Naive	4.61 (Best baseline)
+
+This provided a minimum performance standard for ARIMA-based models.
+
+ARIMA & SARIMA Modeling
+
+Models Built
+
+ARIMA (AutoARIMA, non-seasonal)
+
+SARIMA (AutoARIMA with season_length=7)
+
+These were applied to selected products (BAGUETTE, CROISSANT).
+
+Performance on Holdout Data
+
+Model	MAE
+ARIMA	11.96
+SARIMA	8.90 (best overall)
+Naive	17.31
+Seasonal Naive	12.71
+
+SARIMA effectively captured weekly seasonality and provided the most operationally stable forecasts.
+
+Rolling Cross-Validation
+(Ensuring Forecast Stability, Reliability & Operational Readiness)
+
+To ensure the models generalize beyond a single test window, 8 rolling windows of cross-validation were performed.
+
+Models Compared
+
+Seasonal Naive
+
+ARIMA
+
+SARIMA
+
+CV Performance (Mean MAE across windows)
+
+Model	MAE
+Seasonal Naive	21.12
+ARIMA	21.23
+SARIMA	19.28 (best performing model)
+
+Rolling CV confirmed that SARIMA remained the most stable and reliable model across different forecasting windows.
+
+Forecasting with Exogenous Features (SARIMAX)
+
+To improve forecast accuracy, exogenous predictors were introduced:
+
+Exogenous Variables Used
+
+Unit price
+
+Fourier seasonal features
+
+Calendar features: day, week, month
+
+Models Built
+
+SARIMA with price exogenous
+
+SARIMA with Fourier/time features
+
+Impact on Cross-Validation MAE
+
+Model	MAE
+SARIMA (no exogenous)	19.28
+SARIMA + price	19.21
+SARIMA + Fourier/time features	19.53
+
+SARIMA with price data performed the best, confirming that price changes influence demand and improve forecast accuracy.
+
+Prediction Intervals
+
+To support risk-aware planning, 80% prediction intervals were generated using AutoARIMA. This helps determine:
+
+Minimum production levels
+
+Inventory buffers
+
+Uncertainty-aware staffing decisions
+
+Automated End-to-End Forecasting Workflow
+
+A fully automated pipeline was implemented covering:
+
+Data preprocessing
+
+Filtering by minimum time-series length
+
+Handling missing values
+
+Generating time-based features
+
+Model training
+
+AutoARIMA & AutoSARIMA for automatic hyperparameter selection
+
+Rolling cross-validation
+
+Automated multi-window backtesting
+
+Forecast generation
+
+With and without exogenous features
+
+Future exogenous preparation
+
+Evaluation & visualization
+
+MAE scoring
+
+Comparison bar charts
+
+Forecast plots with historical data
+
+This workflow ensures repeatability, scalability, and easy integration into production systems.
+
+Key Outcomes
+
+SARIMA consistently delivered the most accurate and stable forecasts across baselines, holdout tests, and rolling CV.
+
+Inclusion of price as an exogenous feature improved accuracy further.
+
+Clear weekly seasonality identified across all major products.
+
+A fully automated forecasting framework was built, enabling data-driven planning for a retail bakery environment.
+
+Skills Demonstrated (Resume-Ready)
+
+Time Series Forecasting (ARIMA, SARIMA, SARIMAX)
+
+Rolling Cross-Validation
+
+Feature Engineering for Time Series (Fourier, calendar features)
+
+Exogenous modeling
+
+Automated ML pipelines
+
+Evaluation (MAE, backtesting)
+
+Data Visualization and Reporting
+
+Python (Pandas, NumPy, Matplotlib), StatsForecast library
+
+Conclusion
+
+This project delivered a comprehensive, production-ready time-series forecasting solution capable of improving operational planning for a retail bakery. Through statistical modeling, cross-validation, and exogenous analysis, the pipeline provides accurate, stable, and actionable forecasts that align with real-world business needs.
